@@ -20,6 +20,7 @@
 
 # 6. Login Seguro
 # Login com senha/ Backup local ou na nuvem (criptografado)/ Criptografia de dados sensíveis
+import os
 
 class Paciente:
     def __init__(self, name, age): # birthday, gender, CPF, RG, adress, contact, id):
@@ -40,33 +41,48 @@ class Paciente:
         return f"Nome: {self.name}, Idade: {self.age}"
         # Data de Nascimento: {self.birthday}, Gênero: {self.gender}, CPF: {self.name}, RG: {self.RG}, Endereço: {self.adress}, Contato: {self.contact}, Data da primeira sessão: {self.FirstSession}, ID: {self.id}"
 
-class session:
-    def __init__(self, date, hour, duration, type, status, content):
+class Session:
+    def __init__(self, date, hour): #, duration, type, status, content)
         self.date = date
         self.hour = hour
-        self.duration = duration
-        self.type = type
-        self.status = status
-        self.content = content
+        # self.duration = duration
+        # self.type = type
+        # self.status = status
+        # self.content = content
 
     def __str__(self):
-        return f"Data: {self.date}, Horário: {self.hour}, Conteúdo: {self.content}"
+        return f"Data: {self.date}, Horário: {self.hour}" #, Conteúdo: {self.content}"
 
 def create():
     name = input("Insira o nome do paciente: ")
     age = input("Insira a idade do Paciente: ")
     paciente = Paciente(name, age)
+    session = Session("01/06/1999", "14:00")
 
     with open (f"./TestesBrutos/Data/Paciente_{name}", "w", encoding="utf-8") as patient:
-        patient.write(f"{str(paciente)}")
+        patient.write(f"{str(paciente)}\n{str(session)}")
         
 def read():
-    pass
+    name = input("Insira o nome do paciente: ")
+    with open (f"./TestesBrutos/Data/Paciente_{name}", "r", encoding="utf-8") as patient:
+        patient = patient.readlines()
+        for i in patient:
+            print(i, end="")
+  
 
 def update():
-    pass
+    name = input("Insira o nome do paciente: ")
+    with open (f"./TestesBrutos/Data/Paciente_{name}", "r", encoding="utf-8") as patient:
+        patient = patient.readlines()
+        for i in patient:
+            print(i, end="")
     
+    content = input("\nDigite o conteúdo da Alteração: \n")
+    with open (f"./TestesBrutos/Data/Paciente_{name}", "a", encoding="utf-8") as patient:
+        patient.write(f"\n{str(content)}\n")
+
 def remove():
+    #os.remove
     pass
 
 def error():
@@ -76,14 +92,18 @@ def error():
 Menu = {
     1: create,
     2: read,
-    4: update,
-    3: remove
+    3: update,
+    4: remove
 }
 
-print("\n1.Criar novo paciente  " \
-      "\n2.Ler o prontuário " \
-      "\n3.Atualizar o prontuário " \
-      "\n4.Excluir algum paciente \n")
+while True:
+    print("\n1.Criar novo paciente  " \
+        "\n2.Ler o prontuário " \
+        "\n3.Atualizar o prontuário " \
+        "\n4.Excluir algum paciente" \
+        "\n5.Sair \n")
 
-option = int(input("Selecione a opção desejada: "))
-Menu.get(option, error)()
+    option = int(input("Selecione a opção desejada: "))
+    if option == 5:
+        break
+    Menu.get(option, error)()
