@@ -82,8 +82,12 @@ def update():
         patient.write(f"\n{str(content)}\n")
 
 def remove():
-    #os.remove
-    pass
+    name = input("Insira o nome do paciente: ")
+    file = f"./TestesBrutos/Data/Paciente_{name}"
+    if os.path.exists(file):
+        os.remove(file)
+    else:
+        print("O arquivo não existe.")
 
 def error():
     print("Opção inválida.")
