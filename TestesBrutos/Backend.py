@@ -34,8 +34,9 @@ class Paciente:
         # self.contact = contact
         # self.id = id
 
-    def addInfo(self, FirstSession):
-        self.FirstSession = FirstSession
+    def addInfo(self, GuardianName):
+        self.GuardianName = GuardianName
+        return f"Nome do responsável: {self.GuardianName}"
 
     def __str__(self):
         return f"Nome: {self.name}, Idade: {self.age}"
@@ -55,12 +56,20 @@ class Session:
 
 def create():
     name = input("Insira o nome do paciente: ")
-    age = input("Insira a idade do Paciente: ")
+    age = int(input("Insira a idade do Paciente: "))
     paciente = Paciente(name, age)
-    session = Session("01/06/1999", "14:00")
+    date = input("Insira a data do atendimento: ")
+    hour = input("Insira o horário da sessão: ")
+    session = Session(date, hour)
 
-    with open (f"./TestesBrutos/Data/Paciente_{name}", "w", encoding="utf-8") as patient:
-        patient.write(f"{str(paciente)}\n{str(session)}")
+    if age < 18:
+        GuardianName = input("Qual o nome do responsável: ")
+        guardian = paciente.addInfo(GuardianName)
+        with open (f"./TestesBrutos/Data/Paciente_{name}", "w", encoding="utf-8") as patient:
+            patient.write(f"{str(paciente)}\n{str(guardian)}\n{str(session)}")
+    else:
+        with open (f"./TestesBrutos/Data/Paciente_{name}", "w", encoding="utf-8") as patient:
+            patient.write(f"{str(paciente)}\n{str(session)}")
         
 def read():
     name = input("Insira o nome do paciente: ")
