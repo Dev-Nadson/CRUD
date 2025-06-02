@@ -100,7 +100,10 @@ Menu = {
     4: remove
 }
 
+os.system('cls')
+
 while True:
+    print("----- Gerenciamento de Pacientes -----")
     print("\n1.Criar novo paciente  " \
         "\n2.Ler o prontuário " \
         "\n3.Atualizar o prontuário " \
